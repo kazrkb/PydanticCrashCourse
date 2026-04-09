@@ -6,7 +6,7 @@ class Patient(BaseModel):
     email: EmailStr
     linkedin_url: AnyUrl
     age: int = Field(gt=0, lt=120)
-    weight: float = Field(gt=0)
+    weight: Annotated[float, Field(gt=0,strict=True)]
     married: Annotated[bool, Field(default=None)]
     allergies: Optional[List[str]] = Field(default=None,max_length=5)
     contact_details: Dict[str,str]
