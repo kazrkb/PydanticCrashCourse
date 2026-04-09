@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr, AnyUrl, Field, field_validator
+from pydantic import BaseModel, EmailStr, AnyUrl, Field, field_validator, model_validator
 from typing import List, Dict, Optional, Annotated
 
 class Patient(BaseModel):
@@ -27,14 +27,29 @@ class Patient(BaseModel):
         return value.upper()
 
 
+    @field_validator('age', mode='after')
+    @classmethod
+    def age_range_validation(cls, value):
+        if 0<value<100:
+            return value
+        else:
+            raise ValueError('Age should be in between 0 to 100')
+
+    @model_validator(mode='after')
+    def validate_emergency_contact
+
+
+
+
 def update_patient_data(patient: Patient):
     print(patient.name)
+    print(patient.age)
     print(patient.contact_address)
 
 patient_info = {
     'name': 'Alex',
     'email': 'abc@iub.edu.bd',
-    'age': 18,
+    'age': '90',
     'weight': 78.9,
     'married': False,  # or True
     'allergies': None,
